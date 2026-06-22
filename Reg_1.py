@@ -6,7 +6,6 @@ CHE10  = Population with health spending >10% of household budget (%)
 OOP    = Out-of-pocket expenditure (% of current health expenditure)
 GGHE_D = Domestic general government health expenditure (% of general govt expenditure)
 """
-
 import pandas as pd
 import numpy as np
 import warnings
