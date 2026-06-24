@@ -1,0 +1,203 @@
+{
+  "schema": "aesdk.ai_passport.v1",
+  "status": "block",
+  "generated_at": "2026-06-22T08:45:20.521944+00:00",
+  "source_documents": {
+    "pap_path": "pap.yaml",
+    "pap_sha256": "28147841f1f8727de0ff0085421397a2921d77b2c896130d360c363affb63d80",
+    "proposal_path": "proposal.json",
+    "proposal_sha256": "f397c953d77d9aae2f0cb2f47052d7816195cf6e3865f4fb0aa463743746845d",
+    "rulepack_hash": "sha256:c6ac85ef4e5686e3e25ada140bd75a1f00aea3736a8295c9b64094d1bbadd466"
+  },
+  "field_provenance": {
+    "code_generation": "proposal",
+    "documentation": "proposal",
+    "interpretation": "proposal",
+    "ai_tools_used": "proposal",
+    "human_review_performed": "proposal"
+  },
+  "field_provenance_note": "Field provenance records which source document supplied each metadata field; it is not independent verification of the field value.",
+  "ai_use": {},
+  "artifact_hashes": {
+    "prompt_files": [],
+    "output_files": [],
+    "input_files": [],
+    "ai_code_draft_files": [],
+    "code_files": [],
+    "human_interaction_files": [],
+    "human_intervention_files": [],
+    "review_files": [],
+    "runtime_metadata_files": []
+  },
+  "runtime_metadata": [],
+  "validation": {
+    "status": "block",
+    "violations": [
+      {
+        "rule_id": "RCT-003",
+        "severity": "error",
+        "message": "An RCT workflow must define treatment arm(s) and the control/comparison group."
+      },
+      {
+        "rule_id": "RCT-005",
+        "severity": "warning",
+        "message": "RCT workflows should document the assignment probability or randomization method."
+      },
+      {
+        "rule_id": "RCT-006",
+        "severity": "warning",
+        "message": "Software-generated randomization should record a seed or archived assignment file."
+      },
+      {
+        "rule_id": "RCT-011",
+        "severity": "warning",
+        "message": "RCT workflows should report baseline balance across treatment arms."
+      },
+      {
+        "rule_id": "RCT-012",
+        "severity": "warning",
+        "message": "RCT workflows should check attrition overall and by treatment arm."
+      },
+      {
+        "rule_id": "RCT-013",
+        "severity": "warning",
+        "message": "RCT workflows should document spillover/interference risks."
+      },
+      {
+        "rule_id": "RCT-014",
+        "severity": "warning",
+        "message": "RCT workflows should document power calculations or minimum detectable effects."
+      },
+      {
+        "rule_id": "RCT-015",
+        "severity": "warning",
+        "message": "RCT workflows should document trial registration and a pre-analysis plan when available."
+      },
+      {
+        "rule_id": "RCT-021",
+        "severity": "warning",
+        "message": "RCT workflows should explain why interference or multiple treatment versions do not undermine the estimand."
+      },
+      {
+        "rule_id": "PANEL-FE-005",
+        "severity": "error",
+        "message": "Panel workflows must declare both the unit index and time index."
+      },
+      {
+        "rule_id": "PANEL-FE-007",
+        "severity": "warning",
+        "message": "Fixed-effects workflows should explain the remaining within-unit identifying variation."
+      }
+    ]
+  },
+  "findings": [
+    {
+      "severity": "error",
+      "code": "VALIDATION_BLOCK",
+      "message": "PAP/proposal validation is blocked; inspect validation.violations."
+    }
+  ],
+  "evidence_summary": {
+    "artifact_type": "ai_passport",
+    "status": "block",
+    "declared_ai_use": false,
+    "roles": [],
+    "languages": [],
+    "finding_counts": {
+      "error": 1,
+      "warning": 0,
+      "info": 0
+    },
+    "validation_status": "block",
+    "validation_violation_count": 11,
+    "model_metadata": {
+      "model": null,
+      "agent_tool": null,
+      "source": null,
+      "unavailable_reason_present": false,
+      "runtime_models": [],
+      "runtime_unavailable_fields": []
+    },
+    "human_review": {
+      "human_in_loop": false,
+      "human_reviewed": false,
+      "review_status": null,
+      "human_modified_code": false
+    },
+    "artifact_counts": {
+      "prompt_files": {
+        "declared": 0,
+        "existing": 0,
+        "hashed": 0,
+        "missing": 0,
+        "missing_paths": []
+      },
+      "output_files": {
+        "declared": 0,
+        "existing": 0,
+        "hashed": 0,
+        "missing": 0,
+        "missing_paths": []
+      },
+      "input_files": {
+        "declared": 0,
+        "existing": 0,
+        "hashed": 0,
+        "missing": 0,
+        "missing_paths": []
+      },
+      "ai_code_draft_files": {
+        "declared": 0,
+        "existing": 0,
+        "hashed": 0,
+        "missing": 0,
+        "missing_paths": []
+      },
+      "code_files": {
+        "declared": 0,
+        "existing": 0,
+        "hashed": 0,
+        "missing": 0,
+        "missing_paths": []
+      },
+      "human_interaction_files": {
+        "declared": 0,
+        "existing": 0,
+        "hashed": 0,
+        "missing": 0,
+        "missing_paths": []
+      },
+      "human_intervention_files": {
+        "declared": 0,
+        "existing": 0,
+        "hashed": 0,
+        "missing": 0,
+        "missing_paths": []
+      },
+      "review_files": {
+        "declared": 0,
+        "existing": 0,
+        "hashed": 0,
+        "missing": 0,
+        "missing_paths": []
+      },
+      "runtime_metadata_files": {
+        "declared": 0,
+        "existing": 0,
+        "hashed": 0,
+        "missing": 0,
+        "missing_paths": []
+      }
+    },
+    "runtime_metadata": {
+      "declared": 0,
+      "embedded": 0,
+      "parse_error_count": 0,
+      "models": [],
+      "unavailable_session_fields": []
+    },
+    "replication_blob_note": "The AI passport is not the .aesdk.json replication blob; keep it alongside the blob produced by agent prepare or agent run."
+  },
+  "improvement_opportunities": [],
+  "replication_statement": "No AI use was declared for this analysis."
+}

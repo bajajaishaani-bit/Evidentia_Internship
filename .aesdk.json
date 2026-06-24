@@ -1,0 +1,216 @@
+{
+  "blob_version": "1.2.0",
+  "project_id": "che10_panel_analysis",
+  "pap_path": "pap.yaml",
+  "pap_hash": "sha256:28147841f1f8727de0ff0085421397a2921d77b2c896130d360c363affb63d80",
+  "environment": {
+    "python": "3.13.1",
+    "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O"
+  },
+  "metadata": {
+    "governance_passport": {
+      "policy_version": "1.0.0",
+      "policy_profile": "research_basic",
+      "execution_context": "research",
+      "conformance_level": "basic",
+      "rulepack_hash": "sha256:c6ac85ef4e5686e3e25ada140bd75a1f00aea3736a8295c9b64094d1bbadd466",
+      "generated_at": "2026-06-22T08:45:11.327872+00:00",
+      "attestation": {
+        "provider": "noop",
+        "statement": "Remote attestation not configured; local no-op evidence recorded.",
+        "timestamp": "2026-06-22T08:45:11.328007+00:00",
+        "details": {
+          "mode": "noop"
+        }
+      }
+    }
+  },
+  "events": [
+    {
+      "event_id": "bb1715de-1699-4212-a448-95b999c92899",
+      "event_type": "init",
+      "timestamp": "2026-06-22T08:45:11.350006+00:00",
+      "previous_hash": "",
+      "payload": {
+        "pap_path": "pap.yaml",
+        "pap_hash": "sha256:28147841f1f8727de0ff0085421397a2921d77b2c896130d360c363affb63d80",
+        "governance_passport": {
+          "policy_version": "1.0.0",
+          "policy_profile": "research_basic",
+          "execution_context": "research",
+          "conformance_level": "basic",
+          "rulepack_hash": "sha256:c6ac85ef4e5686e3e25ada140bd75a1f00aea3736a8295c9b64094d1bbadd466",
+          "generated_at": "2026-06-22T08:45:11.327872+00:00",
+          "attestation": {
+            "provider": "noop",
+            "statement": "Remote attestation not configured; local no-op evidence recorded.",
+            "timestamp": "2026-06-22T08:45:11.328007+00:00",
+            "details": {
+              "mode": "noop"
+            }
+          }
+        }
+      },
+      "reasoning_log": null,
+      "hash": "d214e16372156083195d7e8a6d7afdf8b3d327bb8dc0c1cdc1daeb700ecbfe81"
+    },
+    {
+      "event_id": "92ae49f8-e320-44bd-80e0-cb95e4c7d129",
+      "event_type": "propose_model",
+      "timestamp": "2026-06-22T08:45:11.351444+00:00",
+      "previous_hash": "d214e16372156083195d7e8a6d7afdf8b3d327bb8dc0c1cdc1daeb700ecbfe81",
+      "payload": {
+        "proposal": {
+          "research_question": "How do out-of-pocket spending and government health expenditure affect catastrophic health expenditure across countries?",
+          "hypotheses": [
+            "H1: Higher OOP increases CHE10",
+            "H2: Higher GGHE_D decreases CHE10"
+          ],
+          "methodology": "Panel data regression with Fixed Effects (two-way) and clustered standard errors",
+          "data_sources": [
+            "WHO Global Health Expenditure Database",
+            "World Bank World Development Indicators"
+          ],
+          "robustness_checks": [
+            "Clustered standard errors at country level",
+            "Hausman specification test",
+            "Serial correlation tests"
+          ],
+          "expected_results": {
+            "OOP": "positive and statistically significant",
+            "GGHE_D": "negative and statistically significant"
+          },
+          "ai_use": {
+            "code_generation": true,
+            "documentation": true,
+            "interpretation": false,
+            "ai_tools_used": [
+              "GitHub Copilot",
+              "ChatGPT"
+            ],
+            "human_review_performed": true
+          },
+          "task_required_estimator": "FE",
+          "task_required_estimator_justification": "Fixed effects controls for time-invariant country heterogeneity"
+        },
+        "seed": 0,
+        "temperature": 0.0,
+        "model": "unspecified"
+      },
+      "reasoning_log": null,
+      "hash": "196ccc6473b5a88e23ae872432bea2b2452a5e722256d13d111ccfcb33c6a1d7"
+    },
+    {
+      "event_id": "9a11af0b-dd0f-420d-ba25-ef35cf872db5",
+      "event_type": "validate",
+      "timestamp": "2026-06-22T08:45:11.352762+00:00",
+      "previous_hash": "196ccc6473b5a88e23ae872432bea2b2452a5e722256d13d111ccfcb33c6a1d7",
+      "payload": {
+        "status": "block",
+        "violations": [
+          {
+            "rule_id": "RCT-003",
+            "rule_name": "RCT Requires Treatment Arms",
+            "severity": "error",
+            "message": "An RCT workflow must define treatment arm(s) and the control/comparison group.",
+            "guidance": "List all treatment arms and name the reference/control condition.",
+            "citation": "J-PAL, Randomization methods",
+            "source_file": "experimental_rct.rules.yaml"
+          },
+          {
+            "rule_id": "RCT-005",
+            "rule_name": "RCT Requires Assignment Probability or Randomization Method",
+            "severity": "warning",
+            "message": "RCT workflows should document the assignment probability or randomization method.",
+            "guidance": "Record treatment ratios, lottery/permutation/stratified assignment, or the exact randomization procedure.",
+            "citation": "J-PAL, Randomization methods and assignment shares",
+            "source_file": "experimental_rct.rules.yaml"
+          },
+          {
+            "rule_id": "RCT-006",
+            "rule_name": "RCT Reproducibility Requires Seed or Assignment File",
+            "severity": "warning",
+            "message": "Software-generated randomization should record a seed or archived assignment file.",
+            "guidance": "Store the seed, assignment script, or final assignment file so the randomization can be audited.",
+            "citation": "J-PAL, Replicable random assignment",
+            "source_file": "experimental_rct.rules.yaml"
+          },
+          {
+            "rule_id": "RCT-011",
+            "rule_name": "RCT Requires Baseline Balance Check",
+            "severity": "warning",
+            "message": "RCT workflows should report baseline balance across treatment arms.",
+            "guidance": "Report balance on key pre-treatment covariates and any stratification variables.",
+            "citation": "J-PAL; Bruhn, Miriam; McKenzie, David, Randomization and balance",
+            "source_file": "experimental_rct.rules.yaml"
+          },
+          {
+            "rule_id": "RCT-012",
+            "rule_name": "RCT Requires Attrition Check",
+            "severity": "warning",
+            "message": "RCT workflows should check attrition overall and by treatment arm.",
+            "guidance": "Report attrition rates and use bounds or sensitivity analysis when attrition may be differential.",
+            "citation": "J-PAL, Attrition, bounds, and inverse-probability weighting",
+            "source_file": "experimental_rct.rules.yaml"
+          },
+          {
+            "rule_id": "RCT-013",
+            "rule_name": "RCT Requires Spillover or Interference Plan",
+            "severity": "warning",
+            "message": "RCT workflows should document spillover/interference risks.",
+            "guidance": "Explain why interference is unlikely, or specify spillover-aware measurement, clustering, or sensitivity checks.",
+            "citation": "J-PAL, Internal validity, spillovers, and SUTVA",
+            "source_file": "experimental_rct.rules.yaml"
+          },
+          {
+            "rule_id": "RCT-014",
+            "rule_name": "RCT Should Register Power Calculation",
+            "severity": "warning",
+            "message": "RCT workflows should document power calculations or minimum detectable effects.",
+            "guidance": "Add the power calculation, assignment shares, clustering assumptions, and minimum detectable effect.",
+            "citation": "J-PAL, Power calculations",
+            "source_file": "experimental_rct.rules.yaml"
+          },
+          {
+            "rule_id": "RCT-015",
+            "rule_name": "RCT Should Register Trial and PAP",
+            "severity": "warning",
+            "message": "RCT workflows should document trial registration and a pre-analysis plan when available.",
+            "guidance": "Register or link the trial and PAP, or document why registration is unavailable.",
+            "citation": "J-PAL, Trial registration and pre-analysis plans",
+            "source_file": "experimental_rct.rules.yaml"
+          },
+          {
+            "rule_id": "RCT-021",
+            "rule_name": "RCT Requires SUTVA Rationale",
+            "severity": "warning",
+            "message": "RCT workflows should explain why interference or multiple treatment versions do not undermine the estimand.",
+            "guidance": "Document the SUTVA rationale in plain research language, especially when treatment is delivered through networks, classrooms, clinics, villages, or markets.",
+            "citation": "J-PAL, SUTVA and interference",
+            "source_file": "experimental_rct.rules.yaml"
+          },
+          {
+            "rule_id": "PANEL-FE-005",
+            "rule_name": "Panel FE Requires Unit and Time Index",
+            "severity": "error",
+            "message": "Panel workflows must declare both the unit index and time index.",
+            "guidance": "Record the panel unit and time variables before estimating fixed, random, or pooled panel models.",
+            "citation": "Wooldridge, Jeffrey M.; Verbeek, Marno, Panel data structure",
+            "source_file": "panel_inference.rules.yaml"
+          },
+          {
+            "rule_id": "PANEL-FE-007",
+            "rule_name": "Fixed Effects Require Within-Variation Explanation",
+            "severity": "warning",
+            "message": "Fixed-effects workflows should explain the remaining within-unit identifying variation.",
+            "guidance": "Describe the within-unit changes that identify the coefficient after fixed effects.",
+            "citation": "Wooldridge, Jeffrey M.; Verbeek, Marno, Within-estimation interpretation",
+            "source_file": "panel_inference.rules.yaml"
+          }
+        ]
+      },
+      "reasoning_log": null,
+      "hash": "006a27628bef8a3182b2b1354fefb5961032bc0e2116f49864e9afcbc89a53ce"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "research_question": "How do out-of-pocket spending and government health expenditure affect catastrophic health expenditure across countries?",
+  "hypotheses": [
+    "H1: Higher OOP increases CHE10",
+    "H2: Higher GGHE_D decreases CHE10"
+  ],
+  "methodology": "Panel data regression with Fixed Effects (two-way) and clustered standard errors",
+  "data_sources": [
+    "WHO Global Health Expenditure Database",
+    "World Bank World Development Indicators"
+  ],
+  "robustness_checks": [
+    "Clustered standard errors at country level",
+    "Hausman specification test",
+    "Serial correlation tests"
+  ],
+  "expected_results": {
+    "OOP": "positive and statistically significant",
+    "GGHE_D": "negative and statistically significant"
+  },
+  "ai_use": {
+    "code_generation": true,
+    "documentation": true,
+    "interpretation": false,
+    "ai_tools_used": ["GitHub Copilot", "ChatGPT"],
+    "human_review_performed": true
+  },
+  "task_required_estimator": "FE",
+  "task_required_estimator_justification": "Fixed effects controls for time-invariant country heterogeneity"
+}

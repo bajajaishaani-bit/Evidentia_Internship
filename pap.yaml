@@ -1,0 +1,45 @@
+project:
+  id: "che10_panel_analysis"
+  title: "Determinants of Catastrophic Health Expenditure"
+  description: "Analyzing CHE10 as function of OOP and GGHE_D using panel fixed effects"
+  author: "Aishaan Ibajaj"
+  date_registered: "2026-06-22"
+  version: "1.0.0"
+
+data:
+  unit: "country"
+  structure: "panel"
+  N: 100
+  T: 25
+  source: "WHO Global Health Expenditure Database"
+
+identification:
+  strategy: "FE"
+  treatment_variable: "OOP"
+  outcome_variable: "CHE10"
+  covariates:
+    mandatory: ["GGHE_D"]
+    optional: []
+  expected_sign: "positive"
+  fixed_effects:
+    - "country"
+    - "year"
+  standard_errors: "cluster"
+  clustering: "country"
+
+robustness:
+  specification_curve: false
+
+iv_block:
+  instruments: ["lagged_OOP"]
+  first_stage_f_threshold: 10
+
+did_block:
+  parallel_trends_test: false
+  staggered_adoption: false
+
+rct_block:
+  randomization_unit: "none"
+  assignment_variable: "none"
+  treatment_arms: ["none"]
+  estimand: "ATE"
