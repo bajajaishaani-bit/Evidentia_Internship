@@ -1,22 +1,22 @@
 """
-POOLED OLS REGRESSION ON PANEL DATA WITH AESDK
-===============================================
+CROSS-SECTIONAL REGRESSION ON COUNTRY MEANS WITH AESDK
+======================================================
 Equation: CHE10 = β0 + β1·OOP + β2·GGHE_D + ε
 
 This program:
 1. Loads three CSV files (CHE, OOP, GGHE_D)
-2. Reshapes from wide to long format (country-year observations)
-3. Merges all three datasets
-4. Runs pooled OLS regression on the full panel using aesdk
+2. Calculates country means directly from wide format
+3. Merges country-level data
+4. Runs cross-sectional OLS regression on country means using aesdk
 
 INPUT FILES (place in same folder as this script):
-1. CHE10_cleaned.csv - CHE data (dependent variable)
+1. CHE10_cleaned_v2.csv - CHE data (dependent variable)
 2. OOP_cleaned.csv - Out-of-pocket expenditure data
 3. GGHE_D_cleaned.csv - Government health expenditure data
 
 OUTPUT:
 - Regression results (coefficients, standard errors, p-values, R²)
-- Full panel dataset with residuals
+- Country-level dataset with means and residuals
 - Summary tables using aesdk
 """
 
@@ -52,39 +52,33 @@ CHE_FILE = "/Users/aishaanibajaj/Downloads/CHE10_cleaned_v2.csv"
 OOP_FILE = "/Users/aishaanibajaj/Downloads/Internship Evidentia /First regression /OOP_cleaned.csv"
 GGHE_FILE = "/Users/aishaanibajaj/Downloads/GGHE_D_cleaned.csv"
 
-# If files are in Downloads folder (uncomment and use these)
-# FILE_DIR = "/Users/aishaanibajaj/Downloads/"
-# CHE_FILE = FILE_DIR + "CHE10_cleaned.csv"
-# OOP_FILE = FILE_DIR + "OOP_cleaned.csv"
-# GGHE_FILE = FILE_DIR + "GGHE_D_cleaned.csv"
-
 COUNTRY_COL = "Country Name"
 YEAR_START = 2000
 YEAR_END = 2024
 
 
 # ============================================================
-# Function to reshape from wide to long format
+# Function to calculate country means from wide format
 # ============================================================
 
-def reshape_to_long(df, value_name, skip_has_data=False):
+def calculate_country_means(df, value_name, skip_has_data=False):
     """
-    Reshape data from wide (years as columns) to long (country-year).
+    Calculate country means across all years from wide format data.
 
     Parameters:
-    df: DataFrame with Country Name, Country Code, Indicator Name, Indicator Code, and year columns
+    df: DataFrame with Country Name, Country Code, and year columns
     value_name: Name for the value column (e.g., 'che', 'oop_share', 'gov_share')
     skip_has_data: If True, drop the has_data column
 
     Returns:
-    DataFrame with columns: Country Name, year, value_name
+    DataFrame with columns: Country Name, value_name (mean across years)
     """
-    print(f"\n--- Reshaping {value_name} data ---")
+    print(f"\n--- Calculating country means for {value_name} ---")
 
     # Make a copy
     df_clean = df.copy()
 
-    # Drop has_data column if it exists and skip_has_data is True
+    # Drop has_data column if it exists
     if skip_has_data and 'has_data' in df_clean.columns:
         df_clean = df_clean.drop(columns=['has_data'])
 
@@ -102,41 +96,34 @@ def reshape_to_long(df, value_name, skip_has_data=False):
 
     if not year_cols:
         print(f"  WARNING: No year columns found for {value_name}")
+        print(f"  Columns available: {df_clean.columns.tolist()}")
         return pd.DataFrame()
 
-    # Reshape from wide to long
-    df_long = pd.melt(
-        df_clean,
-        id_vars=['Country Name', 'Country Code', 'Indicator Name', 'Indicator Code'],
-        value_vars=year_cols,
-        var_name='year',
-        value_name=value_name
+    # Calculate row-wise mean across year columns
+    # Convert to numeric, coerce errors to NaN
+    df_clean['mean_value'] = df_clean[year_cols].apply(
+        lambda row: pd.to_numeric(row, errors='coerce').mean(),
+        axis=1
     )
 
-    # Convert year to int
-    df_long['year'] = df_long['year'].astype(int)
-
-    # Convert value to numeric, coerce errors to NaN
-    df_long[value_name] = pd.to_numeric(df_long[value_name], errors='coerce')
-
-    # Remove rows with missing values
-    initial_n = len(df_long)
-    df_long = df_long.dropna(subset=[value_name])
-    dropped = initial_n - len(df_long)
-    print(f"  Kept {len(df_long)} observations, dropped {dropped} missing values")
+    # Keep only rows with non-NaN means
+    df_clean = df_clean.dropna(subset=['mean_value'])
 
     # Keep only necessary columns
-    df_long = df_long[['Country Name', 'year', value_name]]
+    result = df_clean[['Country Name', 'mean_value']].copy()
+    result = result.rename(columns={'mean_value': value_name})
 
-    return df_long
+    print(f"  Kept {len(result)} countries with data")
+
+    return result
 
 
 # ============================================================
-# Load and reshape data
+# Load data and calculate country means
 # ============================================================
 
 print("\n" + "=" * 70)
-print("POOLED OLS REGRESSION ON PANEL DATA WITH AESDK")
+print("CROSS-SECTIONAL REGRESSION ON COUNTRY MEANS WITH AESDK")
 print("Equation: CHE10 = β0 + β1·OOP + β2·GGHE_D + ε")
 print("=" * 70)
 
@@ -146,6 +133,7 @@ print("\n--- Loading files ---")
 try:
     che_df = pd.read_csv(CHE_FILE)
     print(f"  ✓ Loaded CHE file: {len(che_df)} rows, {len(che_df.columns)} columns")
+    print(f"    Columns: {che_df.columns.tolist()}")
 except FileNotFoundError:
     print(f"  ✗ ERROR: Could not find '{CHE_FILE}'")
     print(f"  Current directory: {os.getcwd()}")
@@ -154,6 +142,7 @@ except FileNotFoundError:
 try:
     oop_df = pd.read_csv(OOP_FILE)
     print(f"  ✓ Loaded OOP file: {len(oop_df)} rows, {len(oop_df.columns)} columns")
+    print(f"    Columns: {oop_df.columns.tolist()[:5]}...")
 except FileNotFoundError:
     print(f"  ✗ ERROR: Could not find '{OOP_FILE}'")
     print(f"  Current directory: {os.getcwd()}")
@@ -162,57 +151,53 @@ except FileNotFoundError:
 try:
     gghe_df = pd.read_csv(GGHE_FILE)
     print(f"  ✓ Loaded GGHE file: {len(gghe_df)} rows, {len(gghe_df.columns)} columns")
+    print(f"    Columns: {gghe_df.columns.tolist()[:5]}...")
 except FileNotFoundError:
     print(f"  ✗ ERROR: Could not find '{GGHE_FILE}'")
     print(f"  Current directory: {os.getcwd()}")
     raise
 
-# Reshape each dataset to long format
-che_long = reshape_to_long(che_df, 'che', skip_has_data=True)
-oop_long = reshape_to_long(oop_df, 'oop_share', skip_has_data=True)
-gghe_long = reshape_to_long(gghe_df, 'gov_share', skip_has_data=True)
+# Calculate country means
+che_means = calculate_country_means(che_df, 'che', skip_has_data=True)
+oop_means = calculate_country_means(oop_df, 'oop_share', skip_has_data=True)
+gghe_means = calculate_country_means(gghe_df, 'gov_share', skip_has_data=True)
 
 # Check if data was loaded
-if len(che_long) == 0:
-    print("\n  ERROR: No CHE data found after reshaping")
+if len(che_means) == 0:
+    print("\n  ERROR: No CHE data found")
+    print("  Please check the column structure of your CHE file")
     exit(1)
-if len(oop_long) == 0:
-    print("\n  ERROR: No OOP data found after reshaping")
+if len(oop_means) == 0:
+    print("\n  ERROR: No OOP data found")
     exit(1)
-if len(gghe_long) == 0:
-    print("\n  ERROR: No GGHE data found after reshaping")
+if len(gghe_means) == 0:
+    print("\n  ERROR: No GGHE data found")
     exit(1)
 
 # ============================================================
-# Merge datasets
+# Merge country means
 # ============================================================
 
-print("\n--- Merging panel data ---")
+print("\n--- Merging country-level data ---")
 
 # Merge CHE and OOP
-merged = pd.merge(che_long, oop_long, on=['Country Name', 'year'], how='inner')
-print(f"  After merging CHE + OOP: {len(merged)} observations")
+merged = pd.merge(che_means, oop_means, on='Country Name', how='inner')
+print(f"  After merging CHE + OOP: {len(merged)} countries")
 
 # Merge with GGHE
-merged = pd.merge(merged, gghe_long, on=['Country Name', 'year'], how='inner')
-print(f"  After merging with GGHE: {len(merged)} observations")
+merged = pd.merge(merged, gghe_means, on='Country Name', how='inner')
+print(f"  After merging with GGHE: {len(merged)} countries")
 
-# Display summary
-print(f"\n--- Panel data summary ---")
-print(f"  Countries: {merged['Country Name'].nunique()}")
-print(f"  Years: {merged['year'].min()} - {merged['year'].max()}")
-print(f"  Total observations: {len(merged)}")
-
-# Display sample
-print(f"\n  Sample observations (first 10):")
-print(merged[['Country Name', 'year', 'che', 'oop_share', 'gov_share']].head(10).to_string(index=False))
+# Display sample countries
+print(f"\n  Sample countries (first 10):")
+print(merged[['Country Name', 'che', 'oop_share', 'gov_share']].head(10).to_string(index=False))
 
 # ============================================================
-# Run pooled OLS regression
+# Run cross-sectional regression
 # ============================================================
 
 print("\n" + "=" * 70)
-print("POOLED OLS: CHE = β0 + β1·OOP + β2·GGHE_D + ε")
+print("CROSS-SECTIONAL REGRESSION: CHE = β0 + β1·OOP + β2·GGHE_D + ε")
 print("=" * 70)
 
 # Prepare data for regression
@@ -247,9 +232,8 @@ if AESDK_AVAILABLE:
         print("REGRESSION RESULTS (AESDK FORMATTED)")
         print("=" * 70)
         print(f"\nDependent Variable: CHE10 (Population with health spending >10% of household budget)")
-        print(f"Method: Pooled OLS with HC3 robust standard errors")
-        print(f"Number of observations: {model.nobs}")
-        print(f"Number of countries: {merged['Country Name'].nunique()}")
+        print(f"Method: Cross-sectional OLS with HC3 robust standard errors")
+        print(f"Number of countries: {model.nobs}")
         print(f"R-squared: {model.rsquared:.4f}")
         print(f"Adjusted R-squared: {model.rsquared_adj:.4f}")
         print(f"F-statistic: {model.fvalue:.2f} (p = {model.f_pvalue:.4f})")
@@ -283,20 +267,6 @@ if AESDK_AVAILABLE:
 
         print("\nSignificance codes: *** p<0.01, ** p<0.05, * p<0.10")
 
-        # Use aesdk to create a nice table if the package has the functionality
-        try:
-            from aesdk import Table
-
-            table = Table(
-                data=regression_df,
-                title="Pooled OLS Regression Results",
-                notes=f"Number of observations: {model.nobs}, R-squared: {model.rsquared:.4f}"
-            )
-            print("\n--- AESDK Table Object Created ---")
-            # Note: Display would depend on the specific version of aesdk
-        except:
-            pass
-
     except Exception as e:
         print(f"  Note: Could not format with aesdk: {e}")
         print("\n--- STANDARD RESULTS ---")
@@ -319,53 +289,60 @@ print(f"Min residual: {merged['residuals'].min():.4f}")
 print(f"Max residual: {merged['residuals'].max():.4f}")
 
 # ============================================================
-# Additional diagnostics using aesdk (if available)
+# Additional diagnostics
 # ============================================================
 
-if AESDK_AVAILABLE:
+try:
+    print("\n--- DIAGNOSTIC TESTS ---")
+
+    # Calculate VIF for multicollinearity
+    from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+    vif_data = pd.DataFrame()
+    vif_data['Variable'] = X.columns
+    vif_data['VIF'] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+    print("\nVariance Inflation Factor (VIF):")
+    print(vif_data.to_string(index=False))
+
+    # Breusch-Pagan test for heteroskedasticity
+    from statsmodels.stats.diagnostic import het_breuschpagan
+
+    bp_test = het_breuschpagan(model.resid, model.model.exog)
+    print(f"\nBreusch-Pagan test for heteroskedasticity:")
+    print(f"  LM statistic: {bp_test[0]:.4f}")
+    print(f"  LM p-value: {bp_test[1]:.4f}")
+    print(f"  F-statistic: {bp_test[2]:.4f}")
+    print(f"  F p-value: {bp_test[3]:.4f}")
+
+    # Shapiro-Wilk test for normality of residuals
+    from scipy import stats
+
+    shapiro_stat, shapiro_p = stats.shapiro(model.resid)
+    print(f"\nShapiro-Wilk test for normality of residuals:")
+    print(f"  W-statistic: {shapiro_stat:.4f}")
+    print(f"  p-value: {shapiro_p:.4f}")
+
+    # Ramsey RESET test for functional form
     try:
-        print("\n--- DIAGNOSTIC TESTS ---")
+        from statsmodels.stats.diagnostic import linear_ramsey
 
-        # Calculate VIF for multicollinearity
-        from statsmodels.stats.outliers_influence import variance_inflation_factor
+        reset_test = linear_ramsey(model, degree=2)
+        print(f"\nRamsey RESET test (functional form):")
+        print(f"  F-statistic: {reset_test.fvalue:.4f}")
+        print(f"  p-value: {reset_test.pvalue:.4f}")
+    except:
+        pass
 
-        vif_data = pd.DataFrame()
-        vif_data['Variable'] = X.columns
-        vif_data['VIF'] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
-        print("\nVariance Inflation Factor (VIF):")
-        print(vif_data.to_string(index=False))
-
-        # Breusch-Pagan test for heteroskedasticity
-        from statsmodels.stats.diagnostic import het_breuschpagan
-
-        bp_test = het_breuschpagan(model.resid, model.model.exog)
-        print(f"\nBreusch-Pagan test for heteroskedasticity:")
-        print(f"  LM statistic: {bp_test[0]:.4f}")
-        print(f"  LM p-value: {bp_test[1]:.4f}")
-        print(f"  F-statistic: {bp_test[2]:.4f}")
-        print(f"  F p-value: {bp_test[3]:.4f}")
-
-        # Ramsey RESET test for functional form
-        try:
-            from statsmodels.stats.diagnostic import linear_ramsey
-
-            reset_test = linear_ramsey(model, degree=2)
-            print(f"\nRamsey RESET test (functional form):")
-            print(f"  F-statistic: {reset_test.fvalue:.4f}")
-            print(f"  p-value: {reset_test.pvalue:.4f}")
-        except:
-            pass
-
-    except Exception as e:
-        print(f"  Note: Could not run diagnostic tests: {e}")
+except Exception as e:
+    print(f"  Note: Could not run diagnostic tests: {e}")
 
 # ============================================================
 # Save outputs
 # ============================================================
 
-panel_file = "panel_data_full.csv"
-merged.to_csv(panel_file, index=False)
-print(f"\n  ✓ Full panel data with residuals saved to: {panel_file}")
+country_file = "country_means_data.csv"
+merged.to_csv(country_file, index=False)
+print(f"\n  ✓ Country-level data with residuals saved to: {country_file}")
 
 # Save regression results
 results_df = pd.DataFrame({
@@ -377,61 +354,51 @@ results_df = pd.DataFrame({
     'CI_2.5%': model.conf_int()[0].values,
     'CI_97.5%': model.conf_int()[1].values
 })
-results_file = "pooled_ols_results.csv"
+results_file = "cross_sectional_results.csv"
 results_df.to_csv(results_file, index=False)
 print(f"  ✓ Regression results saved to: {results_file}")
 
 # Save country residual summary
-country_residuals = merged.groupby('Country Name').agg({
-    'residuals': ['mean', 'std', 'count'],
-    'che': 'mean',
-    'predicted_che': 'mean'
-}).round(4)
-country_residuals.columns = ['residual_mean', 'residual_std', 'n_obs', 'che_mean', 'predicted_che_mean']
-country_residuals = country_residuals.sort_values('residual_mean', ascending=False)
-country_residuals.to_csv('country_residuals_summary.csv')
-print(f"  ✓ Country residual summary saved to: country_residuals_summary.csv")
+country_residuals = merged[['Country Name', 'che', 'predicted_che', 'residuals']].copy()
+country_residuals = country_residuals.sort_values('residuals', ascending=False)
+country_residuals.to_csv('country_residuals_detailed.csv', index=False)
+print(f"  ✓ Country residuals saved to: country_residuals_detailed.csv")
 
 # ============================================================
-# Generate summary table (if aesdk is available)
+# Generate summary table
 # ============================================================
 
-if AESDK_AVAILABLE:
-    try:
-        print("\n--- SUMMARY TABLE ---")
-
-        # Create a summary table for the regression
-        summary_data = {
-            'Statistic': ['Observations', 'Countries', 'R-squared', 'Adj. R-squared', 'F-statistic', 'F p-value'],
-            'Value': [
-                f"{model.nobs:.0f}",
-                f"{merged['Country Name'].nunique():.0f}",
-                f"{model.rsquared:.4f}",
-                f"{model.rsquared_adj:.4f}",
-                f"{model.fvalue:.2f}",
-                f"{model.f_pvalue:.4f}"
-            ]
-        }
-        summary_df = pd.DataFrame(summary_data)
-        print(summary_df.to_string(index=False))
-    except:
-        pass
+print("\n--- SUMMARY TABLE ---")
+summary_data = {
+    'Statistic': ['Countries', 'R-squared', 'Adj. R-squared', 'F-statistic', 'F p-value'],
+    'Value': [
+        f"{model.nobs:.0f}",
+        f"{model.rsquared:.4f}",
+        f"{model.rsquared_adj:.4f}",
+        f"{model.fvalue:.2f}",
+        f"{model.f_pvalue:.4f}"
+    ]
+}
+summary_df = pd.DataFrame(summary_data)
+print(summary_df.to_string(index=False))
 
 print("\n" + "=" * 70)
-print("✓ POOLED OLS REGRESSION COMPLETE")
+print("✓ CROSS-SECTIONAL REGRESSION COMPLETE")
 print("=" * 70)
 
 # Display top 5 countries with highest positive residuals
-print("\n--- Top 5 countries with highest average positive residuals (higher CHE than predicted) ---")
-top_residuals = country_residuals.head(5)
-for country, row in top_residuals.iterrows():
-    print(f"  {country}: mean residual = {row['residual_mean']:.4f} (n = {row['n_obs']:.0f})")
+print("\n--- Top 5 countries with highest positive residuals (higher CHE than predicted) ---")
+top_residuals = merged.nlargest(5, 'residuals')[['Country Name', 'che', 'predicted_che', 'residuals']]
+for _, row in top_residuals.iterrows():
+    print(f"  {row['Country Name']}: residual = {row['residuals']:.4f} "
+          f"(actual: {row['che']:.2f}, predicted: {row['predicted_che']:.2f})")
 
 # Display top 5 countries with lowest negative residuals
-print("\n--- Top 5 countries with lowest average negative residuals (lower CHE than predicted) ---")
-bottom_residuals = country_residuals.tail(5)
-for country, row in bottom_residuals.iterrows():
-    print(f"  {country}: mean residual = {row['residual_mean']:.4f} (n = {row['n_obs']:.0f})")
+print("\n--- Top 5 countries with lowest negative residuals (lower CHE than predicted) ---")
+bottom_residuals = merged.nsmallest(5, 'residuals')[['Country Name', 'che', 'predicted_che', 'residuals']]
+for _, row in bottom_residuals.iterrows():
+    print(f"  {row['Country Name']}: residual = {row['residuals']:.4f} "
+          f"(actual: {row['che']:.2f}, predicted: {row['predicted_che']:.2f})")
 
 # ============================================================
 # Create HTML report (if aesdk is available)
@@ -439,31 +406,14 @@ for country, row in bottom_residuals.iterrows():
 
 if AESDK_AVAILABLE:
     try:
-        from aesdk import create_report
-
         print("\n--- Generating HTML Report ---")
-
-        # Prepare data for report
-        report_data = {
-            'panel_data': merged,
-            'regression_results': results_df,
-            'country_residuals': country_residuals,
-            'model_stats': {
-                'observations': model.nobs,
-                'countries': merged['Country Name'].nunique(),
-                'r_squared': model.rsquared,
-                'adj_r_squared': model.rsquared_adj,
-                'f_statistic': model.fvalue,
-                'f_pvalue': model.f_pvalue
-            }
-        }
 
         # Create HTML report file
         html_content = f"""
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Pooled OLS Regression Results</title>
+            <title>Cross-Sectional Regression Results</title>
             <style>
                 body {{ font-family: Arial, sans-serif; margin: 40px; }}
                 h1 {{ color: #2c3e50; }}
@@ -478,13 +428,13 @@ if AESDK_AVAILABLE:
             </style>
         </head>
         <body>
-            <h1>Pooled OLS Regression Results</h1>
+            <h1>Cross-Sectional Regression Results</h1>
             <p><strong>Equation:</strong> CHE10 = β₀ + β₁·OOP + β₂·GGHE_D + ε</p>
+            <p><strong>Method:</strong> Cross-sectional OLS on country means</p>
 
             <div class="summary">
                 <h2>Model Summary</h2>
-                <p><strong>Observations:</strong> {model.nobs:.0f}</p>
-                <p><strong>Countries:</strong> {merged['Country Name'].nunique():.0f}</p>
+                <p><strong>Countries:</strong> {model.nobs:.0f}</p>
                 <p><strong>R-squared:</strong> {model.rsquared:.4f}</p>
                 <p><strong>Adjusted R-squared:</strong> {model.rsquared_adj:.4f}</p>
                 <p><strong>F-statistic:</strong> {model.fvalue:.2f} (p = {model.f_pvalue:.4f})</p>
@@ -494,10 +444,10 @@ if AESDK_AVAILABLE:
             {results_df.to_html(index=False)}
 
             <h2>Top 5 Underperforming Countries (Positive Residuals)</h2>
-            {top_residuals.to_html()}
+            {top_residuals.to_html(index=False)}
 
             <h2>Top 5 Overperforming Countries (Negative Residuals)</h2>
-            {bottom_residuals.to_html()}
+            {bottom_residuals.to_html(index=False)}
 
             <p style="margin-top: 40px; color: #7f8c8d; font-size: 12px;">
                 Generated using Python with statsmodels and aesdk
@@ -506,9 +456,9 @@ if AESDK_AVAILABLE:
         </html>
         """
 
-        with open('regression_report.html', 'w') as f:
+        with open('cross_sectional_report.html', 'w') as f:
             f.write(html_content)
-        print("  ✓ HTML report saved to: regression_report.html")
+        print("  ✓ HTML report saved to: cross_sectional_report.html")
 
     except Exception as e:
         print(f"  Note: Could not generate HTML report: {e}")
