@@ -340,3 +340,35 @@ if __name__ == '__main__':
     print(f"Total country-year observations: {len(fpe_scores)}")
     print(f"\nSample output (first 10 rows):\n")
     print(fpe_scores.head(10).to_string(index=False))
+import pandas as pd
+fpe_scores = pd.read_csv('FPE_scores.csv')
+
+print("=== Frontier frequency (how often each country appears on frontier) ===")
+frontier = fpe_scores[fpe_scores['fpe_score'] >= 0.9999]
+print(frontier.groupby(['iso3','country'])['year'].count().sort_values(ascending=False).head(15))
+
+print("\n=== Peer frequency (how often each country is used as a benchmark) ===")
+from collections import Counter
+peer_counts = Counter()
+for peers in fpe_scores['peers'].dropna():
+    for p in peers.split(','):
+        p = p.strip()
+        if p:
+            peer_counts[p] += 1
+for iso3, count in peer_counts.most_common(15):
+    print(f"  {iso3}: {count}")
+    # Load World Bank income classification
+    # (you can hardcode a small dict or download from WB)
+    low_income = ['MLI', 'ZMB', 'ETH', 'RWA', 'BFA', 'MDG', 'MWI', 'UGA', 'MOZ', 'TCD']
+
+    peer_by_income = {
+        'low_income': 0,
+        'other': 0
+    }
+    for iso3, count in peer_counts.most_common():
+        if iso3 in low_income:
+            peer_by_income['low_income'] += count
+        else:
+            peer_by_income['other'] += count
+
+    print(peer_by_income)
