@@ -1,0 +1,97 @@
+iso3,country,income_group,income_label,mean_fpe,min_fpe,max_fpe,n_years,n_frontier_total,n_frontier_eligible,best_year,worst_year,mean_uhc_sci,trend,learn_from,rank_in_group
+CAN,Canada,H,High Income,0.9888,0.9657,1.0,15,6,6,2006,2009,100.0,Stable,"ZAF, BTN, BLR",1
+URY,Uruguay,H,High Income,0.9759,0.9615,0.9903,2,0,0,2016,2005,100.0,Insufficient data,"MDG, ZAF, RWA",2
+TTO,Trinidad and Tobago,H,High Income,0.9737,0.9712,0.9763,2,0,0,2005,2014,100.0,Insufficient data,"MDG, ZAF",3
+PAN,Panama,H,High Income,0.9565,0.8935,0.9875,4,0,0,2008,2003,100.0,Improving,"CAN, RUS, CPV",4
+ROU,Romania,H,High Income,0.9384,0.8759,1.0,15,5,5,2001,2016,100.0,Declining,"RWA, BLR, ZAF",5
+EST,Estonia,H,High Income,0.9231,0.9004,0.9585,5,0,0,2000,2005,100.0,Declining,"BLR, CAN, MKD",6
+ITA,Italy,H,High Income,0.9218,0.9097,0.9338,2,0,0,2001,2010,100.0,Insufficient data,"CAN, RUS, ZMB",7
+HUN,Hungary,H,High Income,0.9103,0.8777,0.9399,12,0,0,2000,2015,100.0,Declining,"CAN, BLR, RUS",8
+POL,Poland,H,High Income,0.9055,0.8547,1.0,22,5,5,2011,2015,100.0,Improving,"BLR, CAN, ZAF",9
+LTU,Lithuania,H,High Income,0.9014,0.8885,0.9215,6,0,0,2000,2008,100.0,Declining,"CAN, BLR, RUS",10
+BEL,Belgium,H,High Income,0.8944,0.8944,0.8944,1,0,0,2009,2009,100.0,Insufficient data,BWA,11
+ARG,Argentina,H,High Income,0.8899,0.8453,0.9344,2,0,0,2017,2004,100.0,Insufficient data,"BLR, CAN, BTN",12
+LVA,Latvia,H,High Income,0.8554,0.795,0.9199,15,0,0,2002,2016,100.0,Declining,"ZMB, MNG, RWA",13
+CYP,Cyprus,H,High Income,0.8515,0.848,0.855,2,0,0,2015,2009,100.0,Insufficient data,"BWA, ZMB",14
+GRC,Greece,H,High Income,0.8484,0.8408,0.8561,2,0,0,2010,2016,100.0,Insufficient data,"ZMB, RWA",15
+MLT,Malta,H,High Income,0.8478,0.843,0.8527,2,0,0,2008,2015,100.0,Insufficient data,"JOR, ZMB",16
+PRT,Portugal,H,High Income,0.8312,0.8312,0.8312,1,0,0,2011,2011,100.0,Insufficient data,"KAZ, MNG",17
+CPV,Cabo Verde,UM,Upper-Middle Income,1.0,1.0,1.0,2,2,2,2007,2001,100.0,Insufficient data,—,1
+ZAF,South Africa,UM,Upper-Middle Income,1.0,1.0,1.0,3,3,3,2005,2005,100.0,Stable,—,1
+NAM,Namibia,UM,Upper-Middle Income,0.9989,0.9978,1.0,2,1,1,2015,2009,100.0,Insufficient data,BWA,3
+KAZ,Kazakhstan,UM,Upper-Middle Income,0.9916,0.9691,1.0,19,5,5,2011,2010,100.0,Stable,"RUS, MNG, ZMB",4
+MEX,Mexico,UM,Upper-Middle Income,0.9852,0.974,0.9961,7,0,0,2016,2010,100.0,Stable,"JOR, ZMB, GHA",5
+IDN,Indonesia,UM,Upper-Middle Income,0.9845,0.9666,1.0,19,4,4,2002,2015,100.0,Stable,"CPV, MNG, ZMB",6
+JOR,Jordan,UM,Upper-Middle Income,0.983,0.9542,1.0,4,1,1,2008,2017,100.0,Declining,"MNG, ZMB, BTN",7
+RUS,Russian Federation,UM,Upper-Middle Income,0.9792,0.945,1.0,12,2,2,2003,2019,100.0,Declining,"MNG, KAZ, BLR",8
+SLV,El Salvador,UM,Upper-Middle Income,0.976,0.9621,0.9854,5,0,0,2018,2016,100.0,Improving,"ZMB, RWA, BTN",9
+CRI,Costa Rica,UM,Upper-Middle Income,0.9722,0.949,1.0,3,1,1,2018,2012,100.0,Improving,"CAN, BTN, KAZ",10
+BLR,Belarus,UM,Upper-Middle Income,0.9698,0.9152,1.0,22,6,6,2021,2016,100.0,Declining,"MNG, ZAF, ZMB",11
+GAB,Gabon,UM,Upper-Middle Income,0.9672,0.9453,0.9891,2,0,0,2017,2005,100.0,Insufficient data,"MDG, BTN",12
+MNG,Mongolia,UM,Upper-Middle Income,0.964,0.8724,1.0,10,3,3,2009,2020,100.0,Declining,"IDN, ZMB, BTN",13
+MUS,Mauritius,UM,Upper-Middle Income,0.9529,0.9321,0.9682,3,0,0,2006,2017,100.0,Declining,"IDN, ZMB, GHA",14
+MKD,North Macedonia,UM,Upper-Middle Income,0.9433,0.9192,1.0,10,1,1,2000,2019,100.0,Declining,"MNG, ZMB, RUS",15
+AZE,Azerbaijan,UM,Upper-Middle Income,0.9405,0.9207,0.958,4,0,0,2003,2005,100.0,Declining,"IDN, MNG, PHL",16
+GTM,Guatemala,UM,Upper-Middle Income,0.9388,0.906,0.9879,3,0,0,2000,2014,100.0,Declining,"MKD, PHL, MNG",17
+UKR,Ukraine,UM,Upper-Middle Income,0.9321,0.8873,0.9772,18,0,0,2008,2002,100.0,Improving,"MNG, ZMB, RWA",18
+IRQ,Iraq,UM,Upper-Middle Income,0.9265,0.8166,0.9853,3,0,0,2006,2017,100.0,Declining,"IDN, ZMB, GHA",19
+PER,Peru,UM,Upper-Middle Income,0.9252,0.8896,1.0,16,1,1,2020,2010,100.0,Improving,"ZMB, BLR, IDN",20
+SRB,Serbia,UM,Upper-Middle Income,0.9227,0.8956,0.951,11,0,0,2003,2005,100.0,Stable,"BLR, CAN, ZMB",21
+MNE,Montenegro,UM,Upper-Middle Income,0.9208,0.8998,0.9365,5,0,0,2012,2015,100.0,Declining,"MNG, GHA, KAZ",22
+PRY,Paraguay,UM,Upper-Middle Income,0.9194,0.9105,0.9283,2,0,0,2000,2011,100.0,Insufficient data,"MKD, PHL, MNG",23
+BIH,Bosnia and Herzegovina,UM,Upper-Middle Income,0.9106,0.8745,0.9309,4,0,0,2011,2001,100.0,Improving,"RUS, SEN, CPV",24
+JAM,Jamaica,UM,Upper-Middle Income,0.9092,0.9054,0.9145,3,0,0,2003,2004,100.0,Declining,"MNG, PHL, RUS",25
+DOM,Dominican Republic,UM,Upper-Middle Income,0.8996,0.8406,0.9587,2,0,0,2018,2007,100.0,Insufficient data,"CPV, CRI",26
+BRA,Brazil,UM,Upper-Middle Income,0.8862,0.8647,0.9077,2,0,0,2017,2008,100.0,Insufficient data,"JOR, ZAF, BTN",27
+MAR,Morocco,UM,Upper-Middle Income,0.8799,0.7945,0.9348,4,0,0,2019,2006,100.0,Improving,"MKD, PHL, IDN",28
+COL,Colombia,UM,Upper-Middle Income,0.8766,0.8244,0.9288,2,0,0,2016,2008,100.0,Insufficient data,"JOR, KAZ, ZAF",29
+ECU,Ecuador,UM,Upper-Middle Income,0.8713,0.8308,0.9118,2,0,0,2013,2011,100.0,Insufficient data,"MNG, RWA",30
+ARM,Armenia,UM,Upper-Middle Income,0.8576,0.7652,0.9481,20,0,0,2008,2019,100.0,Declining,"MNG, RUS, IDN",31
+ALB,Albania,UM,Upper-Middle Income,0.8499,0.7762,0.9255,5,0,0,2017,2002,100.0,Improving,"MNG, MDG, CAF",32
+CHN,China,UM,Upper-Middle Income,0.831,0.7722,0.8942,4,0,0,2002,2018,100.0,Declining,"IDN, MNG, CPV",33
+TUN,Tunisia,UM,Upper-Middle Income,0.8118,0.7825,0.8355,4,0,0,2010,2005,100.0,Improving,"ZMB, BLR, MKD",34
+GEO,Georgia,UM,Upper-Middle Income,0.7871,0.6966,0.8997,21,0,0,2000,2017,100.0,Declining,"MNG, PHL, IDN",35
+BTN,Bhutan,LM,Lower-Middle Income,1.0,1.0,1.0,4,4,4,2003,2007,100.0,Stable,—,1
+ZMB,Zambia,LM,Lower-Middle Income,1.0,1.0,1.0,4,4,4,2004,2015,100.0,Stable,—,1
+ZWE,Zimbabwe,LM,Lower-Middle Income,1.0,1.0,1.0,1,1,1,2017,2017,100.0,Insufficient data,—,1
+HND,Honduras,LM,Lower-Middle Income,0.9968,0.9968,0.9968,1,0,0,2004,2004,100.0,Insufficient data,—,4
+GHA,Ghana,LM,Lower-Middle Income,0.9963,0.9908,1.0,3,1,1,2012,2005,100.0,Stable,"RWA, MDG, ZAF",5
+PAK,Pakistan,LM,Lower-Middle Income,0.9829,0.9622,1.0,8,3,3,2001,2018,100.0,Declining,"ZMB, MDG, MNG",6
+SEN,Senegal,LM,Lower-Middle Income,0.9804,0.9485,1.0,4,1,1,2001,2018,100.0,Declining,"MDG, MNG, GIN",7
+GIN,Guinea,LM,Lower-Middle Income,0.979,0.9575,1.0,3,1,1,2018,2012,100.0,Stable,"IDN, UGA, GHA",8
+PHL,Philippines,LM,Lower-Middle Income,0.9744,0.9395,1.0,6,2,2,2003,2015,100.0,Declining,"ZMB, IDN, MNG",9
+SYR,Syrian Arab Republic,LM,Lower-Middle Income,0.9599,0.9511,0.9686,2,0,0,2003,2007,100.0,Insufficient data,"PHL, RUS, CPV",10
+LSO,Lesotho,LM,Lower-Middle Income,0.9577,0.9577,0.9577,1,0,0,2010,2010,100.0,Insufficient data,ZMB,11
+UZB,Uzbekistan,LM,Lower-Middle Income,0.9524,0.9443,0.959,3,0,0,2003,2000,100.0,Improving,"PHL, MKD, IDN",12
+KEN,Kenya,LM,Lower-Middle Income,0.9486,0.9465,0.9508,2,0,0,2015,2005,100.0,Insufficient data,"MDG, ZMB",13
+BEN,Benin,LM,Lower-Middle Income,0.9467,0.8727,1.0,4,1,1,2011,2018,100.0,Declining,"ZMB, GIN",14
+TJK,Tajikistan,LM,Lower-Middle Income,0.9253,0.8736,0.9608,7,0,0,2007,2009,100.0,Stable,"RWA, CPV, PAK",15
+BGD,Bangladesh,LM,Lower-Middle Income,0.9228,0.765,1.0,4,2,2,2010,2016,100.0,Declining,"RWA, PHL",16
+NPL,Nepal,LM,Lower-Middle Income,0.9206,0.9038,0.9578,5,0,0,2003,2016,100.0,Declining,"RWA, PHL, ZAF",17
+VNM,Viet Nam,LM,Lower-Middle Income,0.9164,0.8481,1.0,10,1,1,2002,2004,100.0,Stable,"IDN, ZMB, CAN",18
+MRT,Mauritania,LM,Lower-Middle Income,0.9065,0.902,0.9109,2,0,0,2014,2004,100.0,Insufficient data,ZAF,19
+CIV,Cote d'Ivoire,LM,Lower-Middle Income,0.8915,0.8491,0.9349,4,0,0,2018,2002,100.0,Improving,"IDN, UGA, CAF",20
+TGO,Togo,LM,Lower-Middle Income,0.8812,0.7424,1.0,4,1,1,2006,2015,100.0,Declining,"MNG, ZMB, GIN",21
+MMR,Myanmar,LM,Lower-Middle Income,0.8753,0.8642,0.8863,2,0,0,2017,2015,100.0,Insufficient data,ZMB,22
+UGA,Uganda,LM,Lower-Middle Income,0.8752,0.7987,1.0,5,1,1,2002,2005,100.0,Declining,"MDG, MNG, GHA",23
+IND,India,LM,Lower-Middle Income,0.8665,0.8362,0.8929,8,0,0,2007,2011,100.0,Declining,"PHL, MNG, RWA",24
+KHM,Cambodia,LM,Lower-Middle Income,0.8555,0.8356,0.8945,3,0,0,2014,2009,100.0,Stable,"MNG, ZAF",25
+NIC,Nicaragua,LM,Lower-Middle Income,0.8281,0.7715,0.8576,3,0,0,2001,2014,100.0,Declining,"CPV, RUS, SEN",26
+NGA,Nigeria,LM,Lower-Middle Income,0.8173,0.7745,0.8549,6,0,0,2018,2009,100.0,Improving,"ZMB, PHL, RUS",27
+CAF,Central African Republic,L,Low Income,1.0,1.0,1.0,1,1,1,2008,2008,100.0,Insufficient data,—,1
+ETH,Ethiopia,L,Low Income,1.0,1.0,1.0,4,4,0,2015,2004,0.0,Stable,—,1
+MDG,Madagascar,L,Low Income,1.0,1.0,1.0,3,3,3,2005,2010,100.0,Stable,—,1
+RWA,Rwanda,L,Low Income,1.0,1.0,1.0,4,4,4,2000,2000,100.0,Stable,—,1
+MLI,Mali,L,Low Income,0.9979,0.9898,1.0,10,7,0,2016,2009,0.0,Stable,"MNG, ZMB",5
+BFA,Burkina Faso,L,Low Income,0.9838,0.935,1.0,4,3,0,2003,2018,0.0,Declining,GIN,6
+TCD,Chad,L,Low Income,0.9555,0.9305,1.0,3,1,0,2003,2011,0.0,Declining,MNG,7
+HTI,Haiti,L,Low Income,0.917,0.8993,0.9348,2,0,0,2012,2013,0.0,Insufficient data,"BTN, GHA, MDG",8
+LBR,Liberia,L,Low Income,0.9147,0.8009,1.0,3,1,1,2007,2014,100.0,Declining,"ZAF, RWA",9
+AFG,Afghanistan,L,Low Income,0.9039,0.7705,1.0,4,1,0,2020,2016,0.0,Declining,"RWA, CPV, PAK",10
+SDN,Sudan,L,Low Income,0.8684,0.8364,0.9005,2,0,0,2014,2009,100.0,Insufficient data,"MNG, ZAF",11
+SLE,Sierra Leone,L,Low Income,0.7234,0.6409,0.8496,3,0,0,2018,2011,100.0,Improving,"PHL, MNG, GIN",12
+BWA,Botswana,Unknown,Unknown,1.0,1.0,1.0,2,2,2,2009,2009,100.0,Insufficient data,—,1
+SWZ,Eswatini,Unknown,Unknown,1.0,1.0,1.0,2,2,2,2000,2000,100.0,Insufficient data,—,1
+COM,Comoros,Unknown,Unknown,0.9399,0.9399,0.9399,1,0,0,2014,2014,100.0,Insufficient data,ZAF,3
+BRB,Barbados,Unknown,Unknown,0.846,0.846,0.846,1,0,0,2016,2016,100.0,Insufficient data,RWA,4
+AGO,Angola,Unknown,Unknown,0.8289,0.6579,1.0,2,1,1,2008,2018,100.0,Insufficient data,GIN,5

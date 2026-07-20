@@ -1,0 +1,10 @@
+FPE DIAGNOSTIC REPORT
+============================================================
+
+Total observations: 380
+Countries: 107
+Years: 2000 - 2019
+
+Mean FPE: 0.8276
+Std Dev: 0.2205
+Frontier (%): 56.3

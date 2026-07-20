@@ -1,0 +1,5 @@
+income_group,income_label,benchmark_iso3,benchmark_country,eligible_frontier_years,peer_references,mean_fpe,min_fpe,n_countries
+H,High Income,CAN,Canada,6,22,0.9162,0.795,17
+UM,Upper-Middle Income,BLR,Belarus,6,12,0.9268,0.6966,35
+LM,Lower-Middle Income,BTN,Bhutan,4,4,0.925,0.7424,27
+L,Low Income,RWA,Rwanda,4,8,0.9507,0.6409,12
