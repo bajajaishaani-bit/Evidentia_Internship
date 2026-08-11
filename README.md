@@ -204,16 +204,16 @@ The WGI composite's coefficient is strongly negative in Model 1 (β = −0.130, 
  
 ## Tech Stack
  
-- **Python** — DEA and regression implementation
-- **scipy (HiGHS LP solver)** — linear programming for the BCC-DEA frontier
-- **pandas / numpy** — data harmonisation and panel construction
-- **Custom Simar-Wilson bootstrap implementation** — double-bootstrap truncated regression, B = 2000, bias-corrected percentile CIs
+- **Python** : DEA and regression implementation
+- **scipy (HiGHS LP solver)** : linear programming for the BCC-DEA frontier
+- **pandas / numpy** : data harmonisation and panel construction
+- **Custom Simar-Wilson bootstrap implementation** : double-bootstrap truncated regression, B = 2000, bias-corrected percentile CIs
 ---
 
  
 **Aishaani Bajaj**
-Third-year Economics undergraduate | Research conducted as part of an internship project
+Fourth-year Economics undergraduate | Research conducted as part of an internship project
  
-This project was built to demonstrate original methodological contribution (not just applied replication): two novel corrections to a standard DEA framework, a from-scratch double-bootstrap inference implementation, and a construct — FPE — that imports a genuinely cross-disciplinary idea (risk-adjusted return) into a new empirical domain.
+This project was built to demonstrate original methodological contribution (not just applied replication): two novel corrections to a standard DEA framework, a from scratch double-bootstrap inference implementation, and a construct , FPE , that imports a genuinely cross-disciplinary idea (risk-adjusted return) into a new empirical domain.
  
-*Feedback, issues, and questions are welcome — please open an issue on this repository.*
+*Feedback, issues, and questions are welcome , please open an issue on this repository.*
